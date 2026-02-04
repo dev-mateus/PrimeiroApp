@@ -87,26 +87,32 @@ const styles = StyleSheet.create({
 ```
 
 ## 3) Atualizar `App.tsx` para usar a navegação
-Substitua o conteúdo de `App.tsx` por este (ou adapte ao seu projeto):
+Edite o arquivo `App.tsx` seguindo os comentários:
 
 ```tsx
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native'; // Adicionar
-import { createNativeStackNavigator } from '@react-navigation/native-stack'; // Adicionar
-import HomeScreen from './src/screens/HomeScreen'; // Adicionar
-import SecondScreen from './src/screens/SecondScreen'; // Adicionar
+// REMOVER ou comentar estas linhas:
+// import { StatusBar } from 'expo-status-bar';
+// import { StyleSheet, Text, View } from 'react-native';
 
-// Adicionar: define as telas do app
+// ADICIONAR estes imports:
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './src/screens/HomeScreen';
+import SecondScreen from './src/screens/SecondScreen';
+
+// ADICIONAR este tipo (define as rotas do app):
 type RootStackParamList = {
   Home: undefined;
   Second: undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>(); // Adicionar
+// ADICIONAR esta linha:
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// MANTER a função App, mas SUBSTITUIR o conteúdo do return:
 export default function App() {
   return (
-    <NavigationContainer> {/* Substituir todo o return pelo código abaixo */}
+    <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Início' }} />
         <Stack.Screen name="Second" component={SecondScreen} options={{ title: 'Segunda' }} />
@@ -114,6 +120,8 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+// REMOVER o StyleSheet.create que estava no final (não é mais necessário)
 ```
 
 ## 4) Como navegar entre as telas
