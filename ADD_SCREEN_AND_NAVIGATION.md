@@ -1,9 +1,9 @@
 # Adicionar uma tela e navegar entre as telas
 
-Este passo a passo mostra como adicionar uma segunda tela ao projeto e navegar entre a tela existente e a nova usando `react-navigation`. Em cada tela criaremos um botão que leva à outra.
+Objetivo: criar uma segunda tela e navegar entre a tela existente e a nova usando `react-navigation`. Cada tela terá um botão para ir à outra.
 
-## 1 — Instalar dependências
-No terminal do projeto execute:
+## 1) Instalar dependências
+Execute no terminal do projeto:
 
 ```bash
 npm install @react-navigation/native
@@ -11,15 +11,12 @@ expo install react-native-screens react-native-safe-area-context
 npm install @react-navigation/native-stack
 ```
 
-> Observação: usando Expo Managed, `expo install` garante compatibilidade para dependências nativas.
+## 2) Criar as telas
+Crie a pasta `src/screens` e os arquivos abaixo:
+- `src/screens/HomeScreen.tsx` (tela inicial)
+- `src/screens/SecondScreen.tsx` (segunda tela)
 
-## 2 — Criar a estrutura de arquivos
-Crie a pasta `src/screens` e os dois arquivos de tela:
-- `src/screens/HomeScreen.tsx` (tela existente equivalência)
-- `src/screens/SecondScreen.tsx` (nova tela)
-
-## 3 — Código das telas
-Crie `src/screens/HomeScreen.tsx` com o seguinte conteúdo:
+### `src/screens/HomeScreen.tsx`
 
 ```tsx
 import React from 'react';
@@ -47,7 +44,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-Crie `src/screens/SecondScreen.tsx` com o seguinte conteúdo:
+### `src/screens/SecondScreen.tsx`
 
 ```tsx
 import React from 'react';
@@ -75,8 +72,8 @@ const styles = StyleSheet.create({
 });
 ```
 
-## 4 — Atualizar `App.tsx` para usar a navegação
-Substitua o conteúdo de `App.tsx` por este (ou integre seguindo o exemplo):
+## 3) Atualizar `App.tsx` para usar a navegação
+Substitua o conteúdo de `App.tsx` por este (ou adapte ao seu projeto):
 
 ```tsx
 import React from 'react';
@@ -104,10 +101,8 @@ export default function App() {
 }
 ```
 
-## 5 — Notas rápidas
-- Os botões usam `navigation.navigate('ScreenName')` para trocar telas.
-- Em TypeScript usamos `NativeStackScreenProps` e um `RootStackParamList` para tipar `navigation` e evitar `any`.
-- Caso use `react-navigation` em um projeto já em produção, confira documentação oficial para configurações adicionais (gesto, animações, deep links, etc.).
+## 4) Como navegar entre as telas
+- Na tela inicial, o botão usa `navigation.navigate('Second')`.
+- Na segunda tela, o botão usa `navigation.navigate('Home')`.
 
----
-Arquivo criado para uso dos alunos; se quiser, eu crio automaticamente os arquivos `src/screens/*` e atualizo `App.tsx` para você.
+Pronto: agora você tem duas telas e navegação bidirecional com botões.
