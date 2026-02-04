@@ -39,9 +39,7 @@ Observações:
 Para rodar como aplicação web (React Native Web) use:
 
 ```bash
-npm run web
-# ou
-expo start --web
+npx expo start --web
 ```
 
 Isso abre uma versão web do app no navegador. É útil para desenvolvimento rápido e evita dependências de emulador/dispositivo.
