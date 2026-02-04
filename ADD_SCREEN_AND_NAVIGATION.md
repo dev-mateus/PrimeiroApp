@@ -39,8 +39,15 @@ export default function HomeScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  title: { fontSize: 20, marginBottom: 16 },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 16,
+  },
 });
 ```
 
@@ -67,8 +74,15 @@ export default function SecondScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  title: { fontSize: 20, marginBottom: 16 },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 16,
+  },
 });
 ```
 
@@ -77,21 +91,22 @@ Substitua o conteúdo de `App.tsx` por este (ou adapte ao seu projeto):
 
 ```tsx
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './src/screens/HomeScreen';
-import SecondScreen from './src/screens/SecondScreen';
+import { NavigationContainer } from '@react-navigation/native'; // Adicionar
+import { createNativeStackNavigator } from '@react-navigation/native-stack'; // Adicionar
+import HomeScreen from './src/screens/HomeScreen'; // Adicionar
+import SecondScreen from './src/screens/SecondScreen'; // Adicionar
 
+// Adicionar: define as telas do app
 type RootStackParamList = {
   Home: undefined;
   Second: undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>(); // Adicionar
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer> {/* Substituir todo o return pelo código abaixo */}
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Início' }} />
         <Stack.Screen name="Second" component={SecondScreen} options={{ title: 'Segunda' }} />
