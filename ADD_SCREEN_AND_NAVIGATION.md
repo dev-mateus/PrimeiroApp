@@ -129,3 +129,27 @@ export default function App() {
 - Na segunda tela, o botão usa `navigation.navigate('Home')`.
 
 Pronto: agora você tem duas telas e navegação bidirecional com botões.
+
+## Resumo do que foi feito
+1. **Instalou dependências** de navegação (`@react-navigation/native`, `@react-navigation/native-stack`) e compatibilidade nativa.
+2. **Criou dois componentes de tela** (HomeScreen e SecondScreen) que recebem o objeto `navigation` via props para permitir navegação entre elas.
+3. **Configurou o navegador** (NavigationContainer + Stack.Navigator) no App.tsx, definindo as rotas e qual tela é inicial.
+4. **Adicionou botões** em cada tela que chamam `navigation.navigate()` para trocar entre telas.
+
+## Conceitos importantes
+### O que é `props`?
+`props` (abreviação de "properties") são dados que passamos de um componente pai para um componente filho. No caso das telas, o `react-navigation` injeta automaticamente o objeto `navigation` como uma prop. Você acessa assim:
+
+```tsx
+export default function HomeScreen({ navigation }: Props) {
+  // navigation é recebido como prop
+}
+```
+
+### O que é o objeto `navigation`?
+É um objeto fornecido pelo `react-navigation` que contém métodos para navegar entre telas:
+- `navigation.navigate('ScreenName')` — vai para a tela especificada.
+- `navigation.goBack()` — volta para a tela anterior.
+- `navigation.push('ScreenName')` — empilha a tela (diferente de `navigate`).
+
+No exemplo, usamos `navigation.navigate('Second')` e `navigation.navigate('Home')` para trocar entre telas.
