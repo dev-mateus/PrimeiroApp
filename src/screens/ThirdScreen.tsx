@@ -3,15 +3,15 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type RootStackParamList = { Home: undefined; Second: undefined; Third: undefined };
-type Props = NativeStackScreenProps<RootStackParamList, 'Second'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Third'>;
 
-export default function SecondScreen({ navigation }: Props) {
+export default function ThirdScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Segunda Tela</Text>
+      <Text style={styles.title}>Terceira Tela</Text>
       <Button
-        title="Vai para Terceira Tela"
-        onPress={() => navigation.navigate('Third')}
+        title="Voltar para Tela Inicial"
+        onPress={() => navigation.navigate('Home')}
       />
     </View>
   );
