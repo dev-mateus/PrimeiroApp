@@ -153,3 +153,27 @@ export default function HomeScreen({ navigation }: Props) {
 - `navigation.push('ScreenName')` — empilha a tela (diferente de `navigate`).
 
 No exemplo, usamos `navigation.navigate('Second')` e `navigation.navigate('Home')` para trocar entre telas.
+
+---
+
+## Desafio: Adicione uma terceira tela
+
+Tente implementar uma terceira tela chamada `ThirdScreen` e criar uma navegação circular:
+
+```
+Home -> Second -> Third -> Home
+```
+
+### Dicas:
+1. Crie o arquivo `src/screens/ThirdScreen.tsx` seguindo o mesmo padrão de HomeScreen e SecondScreen.
+2. Adicione `Third: undefined` ao tipo `RootStackParamList` em `App.tsx`.
+3. Registre a nova tela no Stack.Navigator em `App.tsx` com `<Stack.Screen name="Third" component={ThirdScreen} options={{ title: 'Terceira' }} />`.
+4. NoSecondScreen, o botão deve navegar para "Third" em vez de voltar para "Home".
+5. Na ThirdScreen, o botão deve navegar de volta para "Home".
+
+### Resultado esperado:
+- HomeScreen tem botão "Ir para Segunda Tela" → vai para SecondScreen
+- SecondScreen tem botão "Ir para Terceira Tela" → vai para ThirdScreen
+- ThirdScreen tem botão "Voltar para Tela Inicial" → volta para HomeScreen
+
+Boa sorte! 🚀
