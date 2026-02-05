@@ -33,6 +33,11 @@ npx expo start
 
 Observações:
 - Se não puder usar a mesma rede, o Expo oferece alternativas (`tunnel`) que podem funcionar, mas a experiência mais estável é com ambos na mesma rede local.
+
+```bash
+npx expo start --tunnel
+```
+
 - Para Android você também pode instalar um APK gerado por `eas build` (requer configuração do EAS/Expo) sem usar o Expo Go.
 
 ## 3 — Rodar no navegador (web)
