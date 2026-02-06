@@ -9,3 +9,4 @@ Oferecer um ponto de partida claro para alunos aprenderem React Native, com inst
 - Contexto do projeto: [README_CONTEXT.md](README_CONTEXT.md)
 - Como criar e rodar o app: [HOW_TO_CREATE_AND_RUN.md](HOW_TO_CREATE_AND_RUN.md)
 - Adcionando mais telas e navegação entre elas: [ADD_SCREEN_AND_NAVIGATION.md](ADD_SCREEN_AND_NAVIGATION.md)
+- Passando dados entre telas: [PASS_DATA_BETWEEN_SCREENS.md](PASS_DATA_BETWEEN_SCREENS.md)
