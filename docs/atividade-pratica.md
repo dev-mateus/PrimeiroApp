@@ -34,7 +34,6 @@ npx create-expo-app@latest PerfilApp
 - Repositório público com código funcional.
 - `README.md` curto explicando: como rodar, decisões de validação e instruções de uso.
 - Commits claros por etapa (criando projeto, telas, passagem de dados, validação).
-- (Opcional) GIF ou screenshots mostrando o fluxo Form → Preview → Form.
 
 ## Dicas
 
