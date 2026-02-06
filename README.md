@@ -10,4 +10,3 @@ Oferecer um ponto de partida claro para alunos aprenderem React Native, com inst
 2. Adicionando mais telas e navegação entre elas: [Clique aqui](docs/ADD_SCREEN_AND_NAVIGATION.md)
 3. Passando dados entre telas: [Clique aqui](docs/PASS_DATA_BETWEEN_SCREENS.md)
 4. Atividade prática: [Clique aqui](docs/atividade-pratica.md)
-5. Contexto do projeto (detalhes): [Clique aqui](docs/README_CONTEXT.md)
