@@ -40,4 +40,4 @@ npx create-expo-app@latest PerfilApp
 - Use `route.params?.campo` para acessar parâmetros com segurança.
 - Valide email com uma expressão simples: `/^\S+@\S+\.\S+$/`.
 - Para formulários longos, use `KeyboardAvoidingView` ou `react-native-keyboard-aware-scroll-view`.
-- Teste no navegador (`npm run web`) e no dispositivo com Expo Go.
+- Teste no dispositivo com Expo Go.
