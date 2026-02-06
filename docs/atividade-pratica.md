@@ -1,11 +1,11 @@
 # Atividade Prática — PerfilApp
 
-Objetivo
--------
+## Objetivo
+----------------------------------
 Criar um projeto separado que demonstre navegação e passagem de dados entre telas. O aluno deve implementar o app localmente em um novo repositório e publicá-lo no GitHub.
 
-Requisitos mínimos
-------------------
+## Requisitos mínimos
+----------------------------------
 - Criar um novo repositório local (nome sugerido: `PerfilApp`) e publicar no GitHub.
 - O app deve ter exatamente 2 telas: `FormScreen` e `PreviewScreen`.
 - Implementar navegação com `@react-navigation/native` e `@react-navigation/native-stack`.
@@ -15,43 +15,30 @@ Requisitos mínimos
 - Implementar validação mínima: `nome` e `email` obrigatórios; email com regex simples; impedir navegação se inválido e mostrar mensagem de erro inline.
 - Opcional: botão `Salvar localmente` que persiste os dados em `AsyncStorage`.
 
-Sugestão de comandos iniciais
-----------------------------
+## Sugestão de comandos iniciais
+----------------------------------
 Use o template `default` e crie o projeto com o comando abaixo:
 
 ```bash
 npx create-expo-app@latest PerfilApp
-cd PerfilApp
-npm install @react-navigation/native
-npx expo install react-native-screens react-native-safe-area-context
-npm install @react-navigation/native-stack
-npm start
 ```
 
-Estrutura sugerida
-------------------
+## Estrutura sugerida
+----------------------------------
 - `App.js` — configura o `NavigationContainer` e o `Stack.Navigator` com as rotas `Form` e `Preview`.
 - `src/screens/FormScreen.js` — formulário, validação e `navigation.navigate('Preview', { ... })`.
 - `src/screens/PreviewScreen.js` — exibe `route.params` em um cartão.
 
-Entrega (no GitHub)
--------------------
+## Entrega no GitHub
+----------------------------------
 - Repositório público com código funcional.
 - `README.md` curto explicando: como rodar, decisões de validação e instruções de uso.
 - Commits claros por etapa (criando projeto, telas, passagem de dados, validação).
 - (Opcional) GIF ou screenshots mostrando o fluxo Form → Preview → Form.
 
-Critérios de avaliação (sugestão)
----------------------------------
-- Funcionalidade (60%): navegação correta e passagem de dados; validação funcionando.
-- Código (20%): organização, nomes claros, uso de hooks.
-- Documentação/UX (20%): mensagens de erro, placeholders, README com instruções.
-
-Dicas rápidas
--------------
+## Dicas
+----------------------------------
 - Use `route.params?.campo` para acessar parâmetros com segurança.
 - Valide email com uma expressão simples: `/^\S+@\S+\.\S+$/`.
 - Para formulários longos, use `KeyboardAvoidingView` ou `react-native-keyboard-aware-scroll-view`.
 - Teste no navegador (`npm run web`) e no dispositivo com Expo Go.
-
-Boa implementação — peça ajuda se quiser que eu gere o esqueleto do projeto ou exemplos de `FormScreen`/`PreviewScreen` para facilitar o início.
