@@ -25,9 +25,9 @@ npx create-expo-app@latest PerfilApp
 
 ## Estrutura sugerida
 
-- `App.js` — configura o `NavigationContainer` e o `Stack.Navigator` com as rotas `Form` e `Preview`.
-- `src/screens/FormScreen.js` — formulário, validação e `navigation.navigate('Preview', { ... })`.
-- `src/screens/PreviewScreen.js` — exibe `route.params` em um cartão.
+- `App.tsx` — configura o `NavigationContainer` e o `Stack.Navigator` com as rotas `Form` e `Preview`.
+- `src/screens/FormScreen.tsx` — formulário, validação e `navigation.navigate('Preview', { ... })`.
+- `src/screens/PreviewScreen.tsx` — exibe `route.params` em um cartão.
 
 ## Entrega no GitHub
 
