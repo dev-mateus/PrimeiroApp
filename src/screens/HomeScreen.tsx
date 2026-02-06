@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-type RootStackParamList = { Home: undefined; Second: undefined };
+type RootStackParamList = { Home: undefined; Second: { mensagem: string } };
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
@@ -11,7 +11,7 @@ export default function HomeScreen({ navigation }: Props) {
       <Text style={styles.title}>Tela Inicial</Text>
       <Button
         title="Ir para Segunda Tela"
-        onPress={() => navigation.navigate('Second')}
+        onPress={() => navigation.navigate('Second', { mensagem: 'Olá da tela inicial!' })}
       />
     </View>
   );

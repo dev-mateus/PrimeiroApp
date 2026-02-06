@@ -6,7 +6,7 @@ import ThirdScreen from './src/screens/ThirdScreen';
 
 type RootStackParamList = {
   Home: undefined;
-  Second: undefined;
+  Second: { mensagem: string };
   Third: undefined;
 };
 
@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Third">
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Início' }} />
         <Stack.Screen name="Second" component={SecondScreen} options={{ title: 'Segunda' }} />
         <Stack.Screen name="Third" component={ThirdScreen} options={{ title: 'Terceira' }} />
