@@ -4,11 +4,11 @@
 Projeto React Native iniciado com o template "blank (TypeScript)" do Expo. Objetivo: aprender React Native com TypeScript usando uma configuração mínima.
 
 ## Estrutura de arquivos (na raiz)
-- [app.json](app.json): Configurações do Expo (nome, ícones, splash, plataformas).
-- [App.tsx](App.tsx): Componente principal do app (componente funcional padrão criado pelo template).
-- [index.ts](index.ts): Ponto de entrada que registra o componente raiz com `registerRootComponent`.
-- [package.json](package.json): Dependências e scripts do projeto.
-- [tsconfig.json](tsconfig.json): Configuração TypeScript estendendo `expo/tsconfig.base`.
+- [app.json](../app.json): Configurações do Expo (nome, ícones, splash, plataformas).
+- [App.tsx](../App.tsx): Componente principal do app (componente funcional padrão criado pelo template).
+- [index.ts](../index.ts): Ponto de entrada que registra o componente raiz com `registerRootComponent`.
+- [package.json](../package.json): Dependências e scripts do projeto.
+- [tsconfig.json](../tsconfig.json): Configuração TypeScript estendendo `expo/tsconfig.base`.
 - `assets/`: Imagens usadas (ícone, splash, favicon, adaptive icon).
 
 ## Dependências principais (extraído de `package.json`)
