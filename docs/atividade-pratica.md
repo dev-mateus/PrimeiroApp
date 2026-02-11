@@ -41,3 +41,12 @@ npx create-expo-app@latest PerfilApp
 - Valide email com uma expressão simples: `/^\S+@\S+\.\S+$/`.
 - Para formulários longos, use `KeyboardAvoidingView` ou `react-native-keyboard-aware-scroll-view`.
 - Teste no dispositivo com Expo Go.
+
+## Tarefa extra: Recriar o estilo do PrimeiroApp em `PerfilApp`
+
+- Objetivo: aplicar um tema (cores, espaçamento, tipografia) ao `PerfilApp`.
+- Passos sugeridos:
+	- Crie `src/styles/theme.ts` em `PerfilApp` com cores, espaçamentos e tamanhos de fonte (padrões semelhantes aos do `PrimeiroApp`).
+	- Atualize `FormScreen` e `PreviewScreen` para usar o tema via import (`import theme from '../styles/theme'`) e `StyleSheet.create`.
+	- Garanta que o `PreviewScreen` apresente um cartão com fundo levemente acinzentado, borda arredondada e espaçamento interno.
+	- Use cores primárias para títulos e cores de texto escuras para conteúdo.
