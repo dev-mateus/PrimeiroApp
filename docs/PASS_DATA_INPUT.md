@@ -56,9 +56,23 @@ export default function HomeScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 16 },
-  title: { fontSize: 20, marginBottom: 12 },
-  input: { width: '100%', borderWidth: 1, padding: 8, marginBottom: 12, borderRadius: 6 },
+  container: { 
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    padding: 16 
+    },
+  title: { 
+    fontSize: 20, 
+    marginBottom: 12 
+    },
+  input: { 
+    width: '100%', 
+    borderWidth: 1, 
+    padding: 8, 
+    marginBottom: 12, 
+    borderRadius: 6 
+    },
 });
 ```
 
@@ -89,9 +103,20 @@ export default function SecondScreen({ navigation, route }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  title: { fontSize: 20, marginBottom: 16 },
-  message: { fontSize: 16, marginBottom: 16, fontWeight: 'bold' },
+  container: { 
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center' 
+    },
+  title: { 
+    fontSize: 20, 
+    marginBottom: 16 
+    },
+  message: { 
+    fontSize: 16, 
+    marginBottom: 16, 
+    fontWeight: 'bold' 
+    },
 });
 ```
 
