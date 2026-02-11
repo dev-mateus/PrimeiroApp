@@ -1,7 +1,6 @@
 # Guia de Estilização
 
 Este guia mostra como introduzir um tema centralizado e aplicar estilos nas telas do `PrimeiroApp`.
-IMPORTANTE: este arquivo é apenas um material didático com blocos `ANTES` / `DEPOIS` — não aplique as mudanças automaticamente usem estes trechos para modificar seu PrimeiroApp.
 
 ---
 
