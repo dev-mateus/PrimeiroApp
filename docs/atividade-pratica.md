@@ -13,14 +13,15 @@ Criar um projeto separado que demonstre navegação e passagem de dados entre te
 - Ao clicar em `Preview`, navegar para `PreviewScreen` passando os dados via `navigation.navigate('Preview', { nome, email, bio })`.
 - `PreviewScreen` deve receber os dados via `route.params` e exibir em um cartão estilizado, além de ter um botão que volta para `FormScreen` (ou para `Home`).
 - Implementar validação mínima: `nome` e `email` obrigatórios; email com regex simples; impedir navegação se inválido e mostrar mensagem de erro inline.
-- Opcional: botão `Salvar localmente` que persiste os dados em `AsyncStorage`.
+- Implementar tema1: aplicar um tema (cores, espaçamento, tipografia)
+- Implementar botão `Salvar localmente` que persiste os dados em `AsyncStorage`.
 
 ## Sugestão de comandos iniciais
 
-Use o template `default` e crie o projeto com o comando abaixo:
+Use o template `defaultexpo-template-blank-typescript` e crie o projeto com o comando abaixo:
 
 ```bash
-npx create-expo-app@latest PerfilApp
+npx create-expo-app@latest PerfilApp --template expo-template-blank-typescript
 ```
 
 ## Estrutura sugerida
@@ -42,7 +43,7 @@ npx create-expo-app@latest PerfilApp
 - Para formulários longos, use `KeyboardAvoidingView` ou `react-native-keyboard-aware-scroll-view`.
 - Teste no dispositivo com Expo Go.
 
-## Tarefa extra: Recriar o estilo do PrimeiroApp em `PerfilApp`
+## Tarefa extra:
 
 - Objetivo: aplicar um tema (cores, espaçamento, tipografia) ao `PerfilApp`.
 - Passos sugeridos:
