@@ -64,53 +64,91 @@ export async function removeItem(key: string) {
 
 ## 4) Exemplo prático (fluxo simples)
 
-Contexto atual do `PrimeiroApp`: `HomeScreen` navega para `SecondScreen` passando `mensagem`. Abaixo está um exemplo de como permitir que o usuário salve essa mensagem em storage e como carregá-la.
+Contexto atual do `PrimeiroApp`: `HomeScreen` navega para `SecondScreen` passando `mensagem`. Nesta seção dividimos as responsabilidades:
 
-### Modificar `src/screens/SecondScreen.tsx` — para com salvar/carregar dados
+- `HomeScreen` — captura e salva dados (ex.: salvar uma mensagem ou perfil).
+- `SecondScreen` — lista todos os itens salvos; permite deletar; ao tocar em um item navega para `ThirdScreen` para edição.
+- `ThirdScreen` — tela de edição/atualização do item selecionado.
+
+### Modificar `src/screens/HomeScreen.tsx` — salvar dados (exemplo)
 
 ```tsx
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+// MODIFICAR: adicionar salvamento em HomeScreen
+import React, { useState } from 'react';
+import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { saveItem, loadItem } from '../services/storage'; // INCLUIR
 
-type RootStackParamList = { Home: undefined; Second: { mensagem: string }; Third: undefined };
-type Props = NativeStackScreenProps<RootStackParamList, 'Second'>;
+type RootStackParamList = { Home: undefined; Second: undefined; Third: undefined };
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-export default function SecondScreen({ navigation, route }: Props) {
-  const [saved, setSaved] = useState<string | null>(null);
-  const mensagem = route.params?.mensagem ?? '';
-
-  useEffect(() => {
-    (async () => {
-      const s = await loadItem<string>('ultimaMensagem');
-      if (s) setSaved(s);
-    })();
-  }, []);
+export default function HomeScreen({ navigation }: Props) {
+  const [mensagem, setMensagem] = useState('');
 
   async function handleSave() {
-    await saveItem('ultimaMensagem', mensagem);
-    setSaved(mensagem);
+    // exemplo simples: salvar última mensagem sob uma lista
+    const list = (await loadItem<string[]>('mensagens')) || [];
+    const novos = [...list, { id: String(Date.now()), text: mensagem }];
+    await saveItem('mensagens', novos);
+    setMensagem('');
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Segunda Tela</Text>
-      <Text style={styles.message}>{mensagem}</Text>
-      <Button title="Salvar mensagem" onPress={handleSave} />
-      {saved ? <Text>Última salva: {saved}</Text> : null}
-      <Button
-        title="Vai para Terceira Tela"
-        onPress={() => navigation.navigate('Third')}
+      <Text style={styles.title}>Tela Inicial</Text>
+      <TextInput value={mensagem} onChangeText={setMensagem} placeholder="Digite uma mensagem" style={styles.input} />
+      <Button title="Salvar e Ir para Lista" onPress={async () => { await handleSave(); navigation.navigate('Second'); }} />
+    </View>
+  );
+}
+
+```
+
+### Modificar `src/screens/SecondScreen.tsx` — listar, deletar e navegar para edição
+
+```tsx
+// MODIFICAR: SecondScreen lista itens salvos, permite deletar e navegar para ThirdScreen
+import React, { useEffect, useState } from 'react';
+import { View, Text, Button, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { loadItem, saveItem } from '../services/storage'; // INCLUIR
+
+type RootStackParamList = { Home: undefined; Second: undefined; Third: { id: string } };
+type Props = NativeStackScreenProps<RootStackParamList, 'Second'>;
+
+export default function SecondScreen({ navigation }: Props) {
+  const [items, setItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const l = (await loadItem<any[]>('mensagens')) || [];
+      setItems(l);
+    })();
+  }, []);
+
+  async function handleDelete(id: string) {
+    const filtrado = items.filter(i => i.id !== id);
+    setItems(filtrado);
+    await saveItem('mensagens', filtrado);
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Lista de Mensagens</Text>
+      <FlatList
+        data={items}
+        keyExtractor={i => i.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => navigation.navigate('Third', { id: item.id })}>
+            <Text style={styles.item}>{item.text}</Text>
+            <Button title="Deletar" onPress={() => handleDelete(item.id)} />
+          </TouchableOpacity>
+        )}
       />
     </View>
   );
 }
 ```
-
-Observações:
-- `loadItem('ultimaMensagem')` é chamado no `useEffect` para carregar o valor salvo quando a tela monta.
-- `handleSave` grava a mensagem atual.
 
 ## 5) Alternativa: persistir globalmente no `App.tsx`
 
