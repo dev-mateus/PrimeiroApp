@@ -17,3 +17,13 @@ Este repositório é um material para aprendizado. Siga os passos em ordem e exe
 7) **Atividade prática** — crie um projeto separado aplicando o que aprendeu e publique no GitHub. [Clique aqui](docs/atividade-pratica.md)
 
 Faça commits pequenos e descritivos a cada etapa (criação, telas, navegação, passagem de dados, validação).
+
+## Fluxo de persistência usado nos tutoriais
+
+Os exemplos e guias de persistência usam o seguinte fluxo entre telas (útil para exercícios e para o `PerfilApp`):
+
+- **`HomeScreen` — salvar dados:** captura/insere dados e grava numa lista em AsyncStorage (ex.: chave `mensagens`).
+- **`SecondScreen` — listar & deletar:** carrega a lista (`mensagens`), exibe em `FlatList`, permite deletar itens e, ao tocar em um item, navega para `ThirdScreen` para editar.
+- **`ThirdScreen` — editar/atualizar:** carrega o item selecionado por `id`, permite edição e grava a versão atualizada em storage.
+
+Consulte os guias detalhados: [Persistência (AsyncStorage)](docs/PERSISTENCE_ASYNC_STORAGE.md), [Deletar dados](docs/DELETE_ASYNC_STORAGE.md) e [Atualizar dados](docs/UPDATE_ASYNC_STORAGE.md).
