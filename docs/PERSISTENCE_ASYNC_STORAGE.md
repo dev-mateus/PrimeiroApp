@@ -1,4 +1,4 @@
-# Persistência de dados — PrimeiroApp (passo a passo)
+# Persistência de dados
 
 Este guia descreve como adicionar persistência local ao `PrimeiroApp` usando `@react-native-async-storage/async-storage` (AsyncStorage). O objetivo é ensinar o que instalar, quais arquivos criar/alterar e exemplos de código ANTES/DEPOIS para os alunos aplicarem localmente.
 
