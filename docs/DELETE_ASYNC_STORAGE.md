@@ -21,52 +21,61 @@ IMPORTANTE: este é material didático — copie os trechos para experimentar em
 
 ## 1) Deletar um item específico — usar `removeItem`
 
-ANTES (sem delete):
+Agora o fluxo recomendado é: `HomeScreen` salva itens em uma lista (`mensagens`), `SecondScreen` lista os itens e permite deletar, e ao tocar em um item você navega para `ThirdScreen` para editar.
+
+ANTES (sem lista):
 
 ```tsx
-// src/screens/SecondScreen.tsx (trecho simplificado)
+// Exemplo simplificado sem listagem
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text } from 'react-native';
 
-export default function SecondScreen({ route }) {
+export default function SecondScreen() {
   return (
     <View>
-      <Text>{route.params?.mensagem}</Text>
+      <Text>Lista vazia</Text>
     </View>
   );
 }
 ```
 
-DEPOIS (adicionar botão de deletar usando `removeItem` do helper):
+DEPOIS (listar e deletar itens; tocar navega para `ThirdScreen`):
 
 ```tsx
 // MODIFICAR: src/screens/SecondScreen.tsx
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button } from 'react-native';
-import { saveItem, loadItem, removeItem } from '../services/storage'; // INCLUIR
+import { View, Text, Button, FlatList, TouchableOpacity } from 'react-native';
+import { loadItem, saveItem, removeItem } from '../services/storage'; // INCLUIR
 
-export default function SecondScreen({ route }) {
-  const [saved, setSaved] = useState<string | null>(null);
-  const mensagem = route.params?.mensagem ?? '';
+export default function SecondScreen({ navigation }) {
+  const [items, setItems] = useState<any[]>([]);
 
   useEffect(() => {
     (async () => {
-      const s = await loadItem<string>('ultimaMensagem');
-      setSaved(s);
+      const l = (await loadItem<any[]>('mensagens')) || [];
+      setItems(l);
     })();
   }, []);
 
-  async function handleDelete() {
-    await removeItem('ultimaMensagem');
-    setSaved(null);
+  async function handleDelete(id: string) {
+    const filtrado = items.filter(i => i.id !== id);
+    setItems(filtrado);
+    await saveItem('mensagens', filtrado);
+    await removeItem(id); // opcional: se itens individuais também estiverem sob chaves separadas
   }
 
   return (
     <View>
-      <Text>{mensagem}</Text>
-      <Button title="Salvar mensagem" onPress={async () => { await saveItem('ultimaMensagem', mensagem); setSaved(mensagem); }} />
-      <Button title="Deletar mensagem salva" onPress={handleDelete} />
-      {saved ? <Text>Última salva: {saved}</Text> : <Text>Nenhuma mensagem salva</Text>}
+      <FlatList
+        data={items}
+        keyExtractor={i => i.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => navigation.navigate('Third', { id: item.id })}>
+            <Text>{item.text}</Text>
+            <Button title="Deletar" onPress={() => handleDelete(item.id)} />
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 }
