@@ -65,6 +65,24 @@ Implementar um **CRUD completo** (Create, Read, Update, Delete) para exemplifica
 3. **Atualizar (Update)**: Permitir editar um perfil selecionado retornando à `FormScreen` com os dados preenchidos.
 4. **Deletar (Delete)**: Botão de exclusão que remove um perfil da lista.
 
+### Fluxo de Navegação
+
+```mermaid
+graph LR
+    A[📱 FormScreen<br/>Formulário] -->|Clicar Preview| B[📱 PreviewScreen<br/>Visualizar]
+    A -->|Clicar Ver Lista| C[📱 ListScreen<br/>Lista]
+    A -->|Salvar| C
+    C -->|Clicar Item| A
+    C -->|Clicar Editar| A
+    C -->|Clicar Novo| A
+    C -->|Deletar| C
+    B -->|Voltar| A
+    
+    style A fill:#e1f5ff,stroke:#0077cc,stroke-width:2px
+    style B fill:#fff4e1,stroke:#ff9800,stroke-width:2px
+    style C fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+```
+
 ### Passos sugeridos
 
 #### 1. Instalar AsyncStorage
