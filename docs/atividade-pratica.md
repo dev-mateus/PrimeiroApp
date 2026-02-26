@@ -60,28 +60,39 @@ Implementar um **CRUD completo** (Create, Read, Update, Delete) para exemplifica
 
 ### Requisitos
 
-1. **Criar (Create)**: Botão `Salvar localmente` que persiste o perfil com um ID único em `AsyncStorage`.
-2. **Ler (Read)**: Listar todos os perfis salvos em uma nova tela `ListScreen`.
-3. **Atualizar (Update)**: Permitir editar um perfil selecionado retornando à `FormScreen` com os dados preenchidos.
-4. **Deletar (Delete)**: Botão de exclusão que remove um perfil da lista.
+1. **Criar (Create)**: Botão `Salvar` que persiste o perfil com um ID único em `AsyncStorage` e abre a `ListScreen`.
+2. **Ler (Read)**: Listar todos os perfis salvos na tela `ListScreen`. Ao clicar em um nome, abre `PreviewScreen` com os dados daquele perfil.
+3. **Atualizar (Update)**: Na tela `PreviewScreen`, botão `Editar` carrega os dados para `FormScreen` para serem editados.
+4. **Deletar (Delete)**: Dois tipos de exclusão:
+   - Na `PreviewScreen`: botão `Excluir` remove aquele perfil.
+   - Na `ListScreen`: botão `Excluir Todos` remove todos os perfis.
 
 ### Fluxo de Navegação
 
 ```mermaid
 graph LR
-    A[📱 FormScreen<br/>Formulário] -->|Clicar Preview| B[📱 PreviewScreen<br/>Visualizar]
-    A -->|Clicar Ver Lista| C[📱 ListScreen<br/>Lista]
-    A -->|Salvar| C
-    C -->|Clicar Item| A
-    C -->|Clicar Editar| A
-    C -->|Clicar Novo| A
-    C -->|Deletar| C
-    B -->|Voltar| A
+    A["📱 FormScreen<br/>(Tela Inicial)<br/>Novo Cadastro"] -->|Salvar| C
+    A -->|Listar| C
+    C["📱 ListScreen<br/>Lista de Perfis"] -->|Clicar Nome| B
+    C -->|Voltar| A
+    C -->|Excluir Todos| C
+    B["📱 PreviewScreen<br/>Dados do Perfil"] -->|Editar| A
+    B -->|Excluir| C
     
-    style A fill:#e1f5ff,stroke:#0077cc,stroke-width:2px
-    style B fill:#fff4e1,stroke:#ff9800,stroke-width:2px
-    style C fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style A fill:#e1f5ff,stroke:#0077cc,stroke-width:3px
+    style B fill:#fff4e1,stroke:#ff9800,stroke-width:3px
+    style C fill:#e8f5e9,stroke:#4caf50,stroke-width:3px
 ```
+
+**Resumo do fluxo:**
+1. **FormScreen** é a tela inicial → botões "Salvar" ou "Listar"
+2. **Salvar** persiste e abre → **ListScreen**
+3. **Listar** abre diretamente → **ListScreen**
+4. Na **ListScreen**: clicar no nome → **PreviewScreen**
+5. Na **PreviewScreen**: 
+   - "Editar" → volta para **FormScreen** (com dados)
+   - "Excluir" → volta para **ListScreen**
+6. Na **ListScreen**: "Voltar" → **FormScreen**
 
 ### Passos sugeridos
 
@@ -220,7 +231,7 @@ export default function FormScreen({ navigation, route }: Props) {
         onPress={handleSave}
       />
       <Button
-        title="Ver Lista"
+        title="Listar"
         onPress={() => navigation.navigate('List')}
       />
     </View>
@@ -256,17 +267,16 @@ export default function ListScreen({ navigation }: Props) {
     }, [])
   );
 
-  async function handleDelete(id: string) {
-    Alert.alert('Confirmar', 'Deseja deletar este perfil?', [
+  async function handleDeleteAll() {
+    Alert.alert('Confirmar', 'Deseja deletar TODOS os perfis?', [
       { text: 'Cancelar', style: 'cancel' },
       {
-        text: 'Deletar',
+        text: 'Deletar Todos',
         style: 'destructive',
         onPress: async () => {
-          const filtrado = perfis.filter(p => p.id !== id);
-          await saveItem('perfis', filtrado);
-          setPerfis(filtrado);
-          Alert.alert('Sucesso', 'Perfil deletado');
+          await saveItem('perfis', []);
+          setPerfis([]);
+          Alert.alert('Sucesso', 'Todos os perfis foram deletados');
         },
       },
     ]);
@@ -282,30 +292,21 @@ export default function ListScreen({ navigation }: Props) {
           data={perfis}
           keyExtractor={p => p.id}
           renderItem={({ item }) => (
-            <View style={styles.card}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Form', { id: item.id })}
-              >
-                <Text style={styles.nome}>{item.nome}</Text>
-                <Text style={styles.email}>{item.email}</Text>
-                <Text style={styles.bio}>{item.bio}</Text>
-              </TouchableOpacity>
-              <View style={styles.buttons}>
-                <Button
-                  title="Editar"
-                  onPress={() => navigation.navigate('Form', { id: item.id })}
-                />
-                <Button
-                  title="Deletar"
-                  color="red"
-                  onPress={() => handleDelete(item.id)}
-                />
-              </View>
-            </View>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate('Preview', { id: item.id })}
+            >
+              <Text style={styles.itemText}>{item.nome}</Text>
+            </TouchableOpacity>
           )}
         />
       )}
-      <Button title="Novo Perfil" onPress={() => navigation.navigate('Form')} />
+      <View style={styles.footer}>
+        {perfis.length > 0 && (
+          <Button title="Excluir Todos" color="red" onPress={handleDeleteAll} />
+        )}
+        <Button title="Voltar" onPress={() => navigation.navigate('Form')} />
+      </View>
     </View>
   );
 }
@@ -314,22 +315,111 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
   title: { fontSize: 20, fontWeight: 'bold', marginBottom: 16 },
   empty: { textAlign: 'center', marginTop: 20, color: '#999' },
-  card: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 12,
-    backgroundColor: '#f9f9f9',
+  item: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
-  nome: { fontSize: 16, fontWeight: 'bold', marginBottom: 4 },
-  email: { fontSize: 14, color: '#666', marginBottom: 4 },
-  bio: { fontSize: 12, color: '#999', marginBottom: 8 },
-  buttons: { flexDirection: 'row', gap: 8 },
+  itemText: { fontSize: 16, color: '#333' },
+  footer: { gap: 8, marginTop: 16 },
 });
 ```
 
-#### 5. Atualizar `App.tsx` com a nova rota
+#### 5. Criar `src/screens/PreviewScreen.tsx` (visualizar e editar/deletar)
+
+```tsx
+import React, { useEffect, useState } from 'react';
+import { View, Text, Button, StyleSheet, Alert } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { loadItem, saveItem } from '../services/storage';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'Preview'>;
+
+export default function PreviewScreen({ navigation, route }: Props) {
+  const [perfil, setPerfil] = useState<any>(null);
+
+  useEffect(() => {
+    (async () => {
+      const id = route.params?.id;
+      if (id) {
+        const perfis = (await loadItem<any[]>('perfis')) || [];
+        const encontrado = perfis.find(p => p.id === id);
+        setPerfil(encontrado);
+      }
+    })();
+  }, [route.params?.id]);
+
+  async function handleDelete() {
+    Alert.alert('Confirmar', 'Deseja deletar este perfil?', [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Deletar',
+        style: 'destructive',
+        onPress: async () => {
+          const perfis = (await loadItem<any[]>('perfis')) || [];
+          const filtrado = perfis.filter(p => p.id !== perfil.id);
+          await saveItem('perfis', filtrado);
+          Alert.alert('Sucesso', 'Perfil deletado');
+          navigation.navigate('List');
+        },
+      },
+    ]);
+  }
+
+  if (!perfil) {
+    return (
+      <View style={styles.container}>
+        <Text>Carregando...</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <Text style={styles.label}>Nome:</Text>
+        <Text style={styles.value}>{perfil.nome}</Text>
+
+        <Text style={styles.label}>Email:</Text>
+        <Text style={styles.value}>{perfil.email}</Text>
+
+        <Text style={styles.label}>Bio:</Text>
+        <Text style={styles.value}>{perfil.bio}</Text>
+      </View>
+
+      <View style={styles.buttons}>
+        <Button
+          title="Editar"
+          onPress={() => navigation.navigate('Form', { id: perfil.id })}
+        />
+        <Button
+          title="Excluir"
+          color="red"
+          onPress={handleDelete}
+        />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16 },
+  card: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 16,
+    backgroundColor: '#f9f9f9',
+    marginBottom: 16,
+  },
+  label: { fontSize: 14, fontWeight: 'bold', color: '#666', marginTop: 12 },
+  value: { fontSize: 16, color: '#333', marginBottom: 12 },
+  buttons: { gap: 8 },
+});
+```
+
+#### 6. Atualizar `App.tsx` com a nova rota
 
 ```tsx
 // MODIFICAR: adicionar rota para ListScreen
@@ -358,13 +448,14 @@ export default function App() {
 
 - [ ] Instalar `@react-native-async-storage/async-storage`
 - [ ] Criar `src/services/storage.ts` com funções `saveItem`, `loadItem`, `removeItem`
-- [ ] Modificar `FormScreen` para suportar criação e edição (usando `route.params?.id`)
-- [ ] Criar `ListScreen` com lista de perfis salvos usando `FlatList`
-- [ ] Implementar exclusão com confirmação via `Alert.alert`
-- [ ] Implementar edição: navegar para `FormScreen` com os dados do perfil
+- [ ] Modificar `FormScreen` para suportar criação e edição com botões "Salvar" e "Listar"
+- [ ] Criar `ListScreen` que mostra apenas nomes clicáveis, com botões "Excluir Todos" e "Voltar"
+- [ ] Criar `PreviewScreen` que mostra dados do perfil com botões "Editar" e "Excluir"
+- [ ] Implementar fluxo: FormScreen → ListScreen → PreviewScreen
+- [ ] Implementar edição: PreviewScreen → FormScreen (com route.params.id)
 - [ ] Usar `useFocusEffect` para recarregar a lista quando a tela fica em foco
-- [ ] Adicionar a rota `List` no `App.tsx`
-- [ ] Testar fluxo completo: criar → listar → editar → deletar
+- [ ] Adicionar as rotas `List` e `Preview` no `App.tsx`
+- [ ] Testar fluxo completo: criar → listar → visualizar → editar → deletar
 
 ### Dicas importantes
 
